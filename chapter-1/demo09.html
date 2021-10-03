@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<h1>王小王</h1>
+<!--view层  变成了模板-->
+<div id="app">
+    <!--自定义模板todo-->
+    <todo>
+        <!--自定义模板下又两个 slot插槽, 通过slot进行绑定-->
+        <todo-title slot="todo-title" :title="title"></todo-title>
+        <!--             绑定todo-item                              绑定props中的['item']-->
+        <!--                                                        第一个item是items中的对象,第二个item是data中的数据-->
+        <todo-items slot="todo-item" v-for="(item,index) in todoItems"
+                    v-bind:item="item" :index="index" v-on:remove="removeItems(index)"></todo-items>
+        <!--                                               自定义事件绑定vue方法-->
+    </todo>
+</div>
+<!--导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+
+    Vue.component("todo", {
+        template: '<div>\
+                        <slot name="todo-title"></slot>\
+                        <ul>\
+                            <slot name="todo-item"></slot>\
+                        </ul>\
+                    </div>'
+    });
+
+    Vue.component("todo-title", {
+        props: ['title'],
+        template: '<div>{{title}}</div>'
+    });
+
+    Vue.component("todo-items", {
+        props: ['item', 'index'],
+        /*只能绑定当前组件的方法*/
+        /*                                           自定义点击事件remove*/
+        template: '<li>{{item}} ---{{index}}<button @click="remove">删除</button></li> ',
+        methods: {
+            remove: function (index) {
+
+                //绑定前端的自定义事件
+                //前端的自定义事件绑定了vue的
+                this.$emit('remove', index);
+            }
+        }
+    });
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            title: '王小王',
+            todoItems: [
+                {message: "蒋莹莹"},
+                {message: "李墁墁"},
+                {message: "陈昌霖"}
+            ]
+        },
+
+        methods: {
+            removeItems: function (index) {
+                this.todoItems.splice(index, 1);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

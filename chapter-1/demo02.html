@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<h1>王小王</h1>
+<!--view层  变成了模板-->
+<div id="app">
+    <li v-for="(item , index) in items">
+        <!--绑定数据   双括号-->
+        {{item.message}}-{{index}}
+    </li>
+</div>
+<!--导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            items: [
+                {message: "蒋莹莹"},
+                {message: "李墁墁"}
+            ]
+        },
+
+    });
+</script>
+
+</body>
+</html>

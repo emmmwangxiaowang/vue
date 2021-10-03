@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<h1>王小王</h1>
+<!--view层  变成了模板-->
+<div id="app">
+
+    <!--组件是可复用的 Vue 实例，且带有一个名字 组件不能定义为中文-->
+    <!--组件:  传递值给组件中的值: 用props接收-->
+    <wang v-for="item in items" v-bind:item="item"></wang>
+
+
+</div>
+<!--导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+
+    //定义一个Vue组件component
+    Vue.component("wang", {
+        props: ['item'],
+        template: '<li>{{item}}</li>'
+    })
+    ;
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            items: [
+                {message: "蒋莹莹"},
+                {message: "李墁墁"},
+                {message: "陈昌霖"}
+            ]
+        }
+
+    });
+</script>
+
+</body>
+</html>

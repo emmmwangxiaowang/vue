@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--v-clock  解决闪烁问题-->
+    <style>
+        [v-block] {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="vue" v-block>
+    <div>{{info.name}}</div>
+    <div>{{info.address.country}}</div>
+
+    <!--连接 绑定返回值的url-->
+    <a v-bind:href="info.url">蒋莹莹</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#vue",
+
+        //data()函数使用response中的返回值
+        data() {
+            return {
+                //请求的返回参数格式,必须和json字符串一样,返回参数只用写要用的就行,不用全部都写
+                info: {
+                    name: null,
+                    address: {
+                        street: null,
+                        city: null,
+                        country: null
+                    },
+                    url: null
+                }
+            }
+        },
+        mounted() {
+            //钩子函数  链式编程
+            //获取data.json中的数据,之后调用回调函数 返回response 供前端使用。
+            //异步通信vue推荐用axios
+            axios.get('data.json').then(response => (this.info = response.data));
+        }
+    });
+
+
+</script>
+
+</body>
+</html>
